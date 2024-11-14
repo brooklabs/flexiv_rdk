@@ -127,7 +127,7 @@ if(INSTALL_PYTHON_RDK)
   # Get user site packages path
   message(STATUS "Python executable: ${Python3_EXECUTABLE}")
   execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "import site; print(site.getusersitepackages())"
+    COMMAND ${Python3_EXECUTABLE} -c "import site; print(site.getsitepackages()[0])"
     OUTPUT_VARIABLE USER_SITE
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
