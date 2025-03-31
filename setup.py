@@ -15,7 +15,7 @@ REQUIRED_PACKAGES = [
 
 class CustomBuildExtCommand(BuildExtension):
     def run(self):
-        subprocess.run(["mkdir", "-p", "{current_path}/rdk_install"])
+        subprocess.run(["mkdir", "-p", f"{current_path}/rdk_install"])
 
         # Run the custom shell commands
         subprocess.run(
