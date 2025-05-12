@@ -15,7 +15,7 @@ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Release" "Debug" "RelWithD
 option(INSTALL_PYTHON_RDK "Install Python RDK (to user site packages path)" OFF)
 if(INSTALL_PYTHON_RDK)
   if(NOT RDK_PYTHON_VERSION)
-    set(RDK_PYTHON_VERSION 3.10 CACHE STRING "Python version to install RDK for" FORCE)
+    set(RDK_PYTHON_VERSION 3.12 CACHE STRING "Python version to install RDK for" FORCE)
   endif()
   set_property(CACHE RDK_PYTHON_VERSION PROPERTY STRINGS "3.10" "3.12")
   find_package(Python3 ${RDK_PYTHON_VERSION} EXACT COMPONENTS Interpreter REQUIRED)
@@ -117,16 +117,13 @@ FlexivInstallLibrary()
 #      INSTALL PYTHON LIBRARY
 # ===================================================================
 if(INSTALL_PYTHON_RDK)
-  # Get user site packages path
+  # Get virtual environment site packages path
   message(STATUS "Python executable: ${Python3_EXECUTABLE}")
-  execute_process(
-    COMMAND ${Python3_EXECUTABLE} -c "import site; print(site.getsitepackages()[0])"
-    OUTPUT_VARIABLE USER_SITE
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
-  message(STATUS "Python site packages path: ${USER_SITE}")
+  get_filename_component(REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
+  set(VENV_SITE_PACKAGES "${REPO_ROOT}/.venv/lib/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages")
+  message(STATUS "Python site packages path: ${VENV_SITE_PACKAGES}")
 
-  # Install Python RDK to user site packages path
+  # Install Python RDK to virtual environment site packages path
   message(STATUS "Python RDK library: ${RDK_PY_LIB}")
-  install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/lib_py/${RDK_PY_LIB}" DESTINATION ${USER_SITE})
+  install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/lib_py/${RDK_PY_LIB}" DESTINATION ${VENV_SITE_PACKAGES})
 endif()
