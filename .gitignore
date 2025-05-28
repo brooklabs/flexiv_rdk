@@ -9,3 +9,5 @@ html/
 rdk_install/**
 flexiv_rdk.egg-info/**
 __pycache__
+rdk_install/**
+flexiv_rdk.egg-info/**
