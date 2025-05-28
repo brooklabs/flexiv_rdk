@@ -7,3 +7,5 @@ install/
 cloned/
 html/
 __pycache__
+rdk_install/**
+flexiv_rdk.egg-info/**
